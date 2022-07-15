@@ -1,8 +1,8 @@
 import express from "express";
 import bodyParser from "body-parser";
-import viewEngine from "./config/viewEngine-config";
-import initWebRouters from "./routers/home-router";
-import connectDB from "./config/db-config";
+import viewEngine from "./config/viewEngine-config.js";
+import initWebRouters from "./routers/home-router.js";
+import connectDB from "./config/db-config.js";
 import dotenv from "dotenv";
 dotenv.config()
 
