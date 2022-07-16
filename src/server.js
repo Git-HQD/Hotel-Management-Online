@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import viewEngine from "./config/viewEngine-config.js";
 import initWebRouters from "./routers/home-router.js";
-import connectDB from "./db-config.js";
+import connectDB from "./connect-DB.js";
 import dotenv from "dotenv";
 dotenv.config()
 
