@@ -35,6 +35,20 @@ const hashUserPwd = async (password) => {
   });
 };
 
+const getAllUser = () => {
+  return new Promise(async (resolve, rejects) => {
+    try {
+      const users = db.users.findAll({
+        raw: true,
+      });
+      resolve(users);
+    } catch (error) {
+      rejects(error);
+    }
+  });
+};
+
 module.exports = {
   createNewUser,
+  getAllUser,
 };
