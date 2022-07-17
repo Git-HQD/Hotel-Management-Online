@@ -1,4 +1,4 @@
-import usersService from "../services/usersCRUD.service";
+import usersService from "../services/usersCRUD-service.js";
 
 const getCreateUser = async (req, res) => {
   return res.render("create-user.ejs");
@@ -20,7 +20,6 @@ const getReadUser = async (req, res) => {
 
 const getEditUser = async (req, res) => {
   const userId = req.query.id;
-  console.log(userId);
   if (userId) {
     const userData = await usersService.getUserInfoById(userId);
 
@@ -40,10 +39,21 @@ const putUser = async (req, res) => {
   });
 };
 
+const deleteUser = async (req, res) => {
+  const id = req.query.id;
+  if (id) {
+    await usersService.deleteUserById(id);
+    return res.send("Delete The User Successfully !");
+  } else {
+    return res.send("User Not Found");
+  }
+};
+
 module.exports = {
   getCreateUser,
   postUser,
   getReadUser,
   getEditUser,
   putUser,
+  deleteUser,
 };
