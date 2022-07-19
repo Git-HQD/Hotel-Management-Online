@@ -1,4 +1,4 @@
-import db from "../models/index-model.js";
+import db from "../models/index.model.js";
 import bcrypt from "bcryptjs";
 
 const SALT = bcrypt.genSaltSync(10);
@@ -30,7 +30,7 @@ const getAllUser = async () => {
 };
 
 // Get User Info By ID
-const getUserInfoById = async (id) => {
+const getUserInfoById = async(id) => {
   return db.users.findOne({
     where: { id: id },
     raw: true,
