@@ -1,8 +1,9 @@
 import express from "express";
 import bodyParser from "body-parser";
 import viewEngine from "./config/viewEngine-config.js";
-import initWebRouters from "./routers/web-router.js";
-import connectDB from "./connect-DB.js";
+import webRouter from "./routers";
+import apiRouter from "../src/routers/api/index.js";
+import connectDB from "./database.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -10,10 +11,10 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use("/", webRouter);
+app.use("/api", apiRouter);
 
 viewEngine(app);
-initWebRouters(app);
-
 connectDB();
 
 const PORT = process.env.PORT;
