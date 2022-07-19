@@ -1,4 +1,3 @@
-"use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("users", {
@@ -8,38 +7,22 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      userName: {
+      user_name: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
-        validate: {
-          is: ["^[a-z0-9]+$", "i"],
-          len: [2, 10],
-          isAlphanumeric: true,
-        },
       },
-      firstname: {
+      first_name: {
         type: Sequelize.STRING,
         allowNull: false,
-        validate: {
-          is: ["^[a-z0-9]+$", "i"],
-          len: [2, 20],
-        },
       },
-      lastname: {
+      last_name: {
         type: Sequelize.STRING,
         allowNull: false,
-        validate: {
-          is: ["^[a-z0-9]+$", "i"],
-          len: [2, 20],
-        },
       },
       email: {
         type: Sequelize.STRING,
         allowNull: false,
-        validate: {
-          isEmail: true,
-        },
       },
       password: {
         type: Sequelize.STRING,
@@ -53,7 +36,7 @@ module.exports = {
         type: Sequelize.BIGINT,
         allowNull: false,
       },
-      roleID: {
+      role_id: {
         type: Sequelize.STRING,
         allowNull: false,
       },
