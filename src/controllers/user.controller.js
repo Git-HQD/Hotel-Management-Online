@@ -1,36 +1,44 @@
 import db from "../models/index.model";
 import userService from "../services/users.service";
 
-const readUser = async(req, res) => {
-  const users = await db.users.findAll();
+const getUsers = async(req, res) => {
+  const users = await userService.getAll();
 
-  return res.status(200).json(users);
+  res.status(200).json(users);
 };
 
-const createUser = async(req, res) => {
-  await userService.createNewUser(req.body);
+const get = async(req, res) => {
+  const {id: userId} = req.params;
+  const user = await userService.getUserById(userId);
 
-  res.status(201).json({
-    message: "Create User Successful !"
-  })
+  res.status(200).json(user)
 };
 
-const updateUser = async(req, res) => {
-  res.status(200).json({
-    message: "ok"
-  })
+const create = async(req, res) => {
+  const data = req.body;
+  const user = await userService.createService(data);
+
+  res.status(201).json(user);
 };
 
-const deleteUser = async(req, res) => {
-  res.status(200).json({
-    message: "ok"
-  })
+const update = async(req, res) => {
+  const id = req.params;
+  const user = await userService.updateService(id);
+
+  res.status(200).json(user);
+}
+
+const deLete = async(req, res) => {
+  const data = req.body;
+  const user = await userService.deleteService(data);
+
+  res.status(200).json(user);
 };
 
-
-module.exports = {
-  readUser,
-  createUser,
-  updateUser,
-  deleteUser,
+export default {
+  getUsers,
+  get,
+  create,
+  update,
+  deLete,
 };

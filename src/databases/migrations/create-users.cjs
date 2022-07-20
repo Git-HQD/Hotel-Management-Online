@@ -7,7 +7,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      user_name: {
+      username: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
@@ -36,7 +36,7 @@ module.exports = {
         type: Sequelize.BIGINT,
         allowNull: false,
       },
-      role_id: {
+      iam_role: {
         type: Sequelize.STRING,
         allowNull: false,
       },
