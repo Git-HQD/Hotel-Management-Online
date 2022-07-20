@@ -1,37 +1,34 @@
-'use strict';
-
 module.exports = {
   async up (queryInterface, Sequelize) {
-   await queryInterface.createTable('bookings',{
-    id:{
+    await queryInterface.createTable('bookings',{
+     id:{
       allowNull: false,
       primaryKey:true,
       autoIncrement: true,
       type: Sequelize.DataTypes.INTEGER
-    },
-    user_id:{
+     },
+     user_id:{
       type: Sequelize.DataTypes.INTEGER,
       references: {
         model: {
           tableName: 'users',
-
         },
         key: 'id'
       },
-    },
-    price:{
+     },
+     price:{
       type: Sequelize.DataTypes.DECIMAL
-    },
-    check_in:{
+     },
+     check_in:{
       type: Sequelize.DataTypes.DATE
-    },
-    check_out:{
+     },
+     check_out:{
       type: Sequelize.DataTypes.DATE
-    },
-    booking_date:{
+     },
+     booking_date:{
       type: Sequelize.DataTypes.DATE
-    }
-   })
+     }
+    })
   },
 
   async down (queryInterface, Sequelize) {
