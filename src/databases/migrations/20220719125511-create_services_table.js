@@ -1,7 +1,3 @@
-'use strict';
-
-const sequelize = require("sequelize");
-
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createTable('services',{
@@ -11,16 +7,16 @@ module.exports = {
         autoIncrement: true,
         type: Sequelize.DataTypes.INTEGER,
       },
-      name_id:{
-        type: Sequelize.DataTypes.INTEGER
+      name_service:{
+        type: Sequelize.DataTypes.STRING,
       },
       price:{
         type: Sequelize.DataTypes.DECIMAL
       },
     })
-  },
+ },
 
   async down (queryInterface, Sequelize) {
     await queryInterface.dropTable('services')
-    }
+  }
 };

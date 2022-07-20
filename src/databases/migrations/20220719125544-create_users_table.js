@@ -1,7 +1,3 @@
-'use strict';
-
-const { toDefaultValue } = require("sequelize/types/utils");
-
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('users', {
@@ -17,18 +13,20 @@ module.exports = {
       last_name: {
         type: Sequelize.DataTypes.STRING
       },
-      
       email: {
-        type: Sequelize.DataTypes.STRING
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false
       },
       password: {
-        type: Sequelize.DataTypes.STRING
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false
       },
       address: {
-        type: Sequelize.DataTypes.STRING
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false
       },
       phone: {
-        type: Sequelize.DataTypes.STRING
+        type: Sequelize.DataTypes.STRING,
       },
       role: {
         type: Sequelize.DataTypes.ENUM('admin', 'custommer', 'employee')

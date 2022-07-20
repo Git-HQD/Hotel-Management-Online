@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createTable('booking_room',{
@@ -9,7 +7,7 @@ module.exports = {
         autoIncrement: true,
         type: Sequelize.DataTypes.INTEGER
       },
-      rooms_id:{
+      room_id:{
         type: Sequelize.DataTypes.INTEGER,
         references: {
           model: {
@@ -18,7 +16,7 @@ module.exports = {
           key: 'id'
         },
       },
-      bookings_id:{
+      booking_id:{
         type: Sequelize.DataTypes.INTEGER,
         references: {
           model: {
