@@ -2,9 +2,10 @@ import express from "express";
 import bodyParser from "body-parser";
 import viewEngine from "./config/viewEngine-config.js";
 import initWebRouters from "./routers/web-router.js";
-import connectDB from "./connect-DB.js";
 import dotenv from "dotenv";
 dotenv.config();
+
+import { connectDB } from './models/index-model';
 
 const app = express();
 
@@ -16,7 +17,7 @@ initWebRouters(app);
 
 connectDB();
 
-const PORT = process.env.PORT;
+const PORT = process.env.APP_PORT;
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
