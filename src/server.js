@@ -1,17 +1,11 @@
-import express from "express";
-import bodyParser from "body-parser";
-import viewEngine from "./config/viewEngine-config.js";
-<<<<<<< HEAD
-// import webRouter from "./routers/web/web.router";
-import apiRouter from "../src/routers/api/index";
-import connectDB from "./database.js";
-=======
-import initWebRouters from "./routers/web-router.js";
->>>>>>> origin/init-database
-import dotenv from "dotenv";
-dotenv.config();
+const express = require("express");
+const bodyParser = require("body-parser");
+const apiRouter = require("./routers/api/index")
 
-import { connectDB } from './models/index-model';
+require("dotenv").config();
+
+
+const { connectDB } = require('./models/index.model');
 
 const app = express();
 
@@ -19,12 +13,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api/v1", apiRouter);
 
-// webRouter(app);
-viewEngine(app);
+app.use(express.static("./src/public"));
+app.set("view engine", "ejs");
+app.set("views", "./src/views");
+
 connectDB();
 
 const PORT = process.env.APP_PORT;
+const HOST = process.env.APP_HOST;
 
-app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
+app.listen(PORT, HOST, () => {
+  console.log(`Server is running at http://${HOST}:${PORT}`);
 });

@@ -1,5 +1,4 @@
-import db from "../models/index.model";
-import userService from "../services/users.service";
+const userService = require("../services/users.service");
 
 const getUsers = async(req, res) => {
   const users = await userService.getAll();
@@ -22,20 +21,22 @@ const create = async(req, res) => {
 };
 
 const update = async(req, res) => {
-  const id = req.params;
-  const user = await userService.updateService(id);
+  const id = req.params.id;
+  const data = req.body;
+  const user = await userService.updateService(id, data);
 
   res.status(200).json(user);
 }
 
 const deLete = async(req, res) => {
+  const id = req.params.id;
   const data = req.body;
-  const user = await userService.deleteService(data);
+  const user = await userService.deleteService(id, data);
 
   res.status(200).json(user);
 };
 
-export default {
+module.exports = {
   getUsers,
   get,
   create,

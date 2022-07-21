@@ -1,5 +1,5 @@
-import db from "../models/index.model";
-import bcrypt from "bcryptjs";
+const db = require("../models/index.model");
+const bcrypt = require("bcryptjs");
 
 const SALT = bcrypt.genSaltSync(10);
 
@@ -39,28 +39,27 @@ const createService = async(data) => {
     });
 }
 
-const updateService = async(data) => {
-  const user = await getUserById();
-
-  if(!user) {
-    throw new Error("User Not Found");
-  }
+const updateService = async(userId, data) => {
+  const user = await getUserById(userId);
   
-  user.first_name = data.first_name,
-  user.last_name = data.last_name,
-  user.address = data.address
+  user.first_name = data.first_name;
+  user.last_name = data.last_name;
+  user.address = data.address;
+ 
+  await user.save(user);
 
-  await user.save();
-  
+  return user;
 };
 
-const deleteService = async(data) => {
-  const user = await db.users.findOne(data);
+const deleteService = async(userId, data) => {
+  const user = await getUserById(userId);
 
-  return user.destroy();
+  await user.destroy(data);
+
+  return user;
 };
 
-export default {
+module.exports = {
   getAll,
   getUserById,
   createService,
@@ -68,3 +67,4 @@ export default {
   updateService,
   deleteService,
 };
+  
