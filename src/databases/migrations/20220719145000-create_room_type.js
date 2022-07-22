@@ -7,18 +7,9 @@ module.exports = {
           autoIncrement:true,
           type: Sequelize.DataTypes.INTEGER
         },
-        room_name:{
+        name:{
           type: Sequelize.DataTypes.STRING
         },
-        service_id:{
-          type: Sequelize.DataTypes.INTEGER,
-          references: {
-            model: {
-              tableName: 'services',
-            },
-            key: 'id'
-          },
-        }
       })
   },
 

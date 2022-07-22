@@ -7,12 +7,22 @@ module.exports = {
         autoIncrement: true,
         type: Sequelize.DataTypes.INTEGER,
       },
-      name_service:{
+      name:{
         type: Sequelize.DataTypes.STRING,
       },
       price:{
         type: Sequelize.DataTypes.DECIMAL
       },
+      room_type_id:{
+        type: Sequelize.DataTypes.INTEGER,
+        references: {
+          model: {
+            tableName: 'room_type'
+          },
+          key: 'id'
+        },
+        allowNull: false
+      }
     })
  },
 
