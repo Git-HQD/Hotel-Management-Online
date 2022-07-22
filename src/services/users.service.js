@@ -25,7 +25,7 @@ const getUser = async (userId) => {
   return user;
 };
 
-const create = async (data) => {
+const createUser = async (data) => {
   const hashPwdBcrypt = await hashPassword(data.password);
 
   return db.users.create({
@@ -40,7 +40,7 @@ const create = async (data) => {
   });
 };
 
-const update = async (userId, data) => {
+const updateUser = async (userId, data) => {
   const user = await getUser(userId);
 
   user.first_name = data.first_name;
@@ -52,19 +52,17 @@ const update = async (userId, data) => {
   return user;
 };
 
-const deLete = async (userId, data) => {
+const deleteUser = async (userId, data) => {
   const user = await getUser(userId);
 
   await user.destroy(data);
-
-  return;
 };
 
 module.exports = {
   getAll,
   getUser,
-  create,
+  createUser,
   hashPassword,
-  update,
-  deLete,
+  updateUser,
+  deleteUser,
 };

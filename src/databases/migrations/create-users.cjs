@@ -37,7 +37,7 @@ module.exports = {
         allowNull: false,
       },
       iam_role: {
-        type: Sequelize.STRING,
+        type: Sequelize.ENUM("Administrator", "Customer", "Employeer"),
         allowNull: false,
       },
       createdAt: {

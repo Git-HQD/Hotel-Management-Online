@@ -14,28 +14,28 @@ const getUser = async (req, res) => {
   res.status(200).json(user);
 };
 
-const create = async (req, res) => {
+const createUser = async (req, res) => {
   const data = req.body;
 
-  const user = await userService.create(data);
+  const user = await userService.createUser(data);
 
   res.status(201).json(user);
 };
 
-const update = async (req, res) => {
+const updateUser = async (req, res) => {
   const id = req.params.id;
   const data = req.body;
 
-  const user = await userService.update(id, data);
+  const user = await userService.updateUser(id, data);
 
   res.status(200).json(user);
 };
 
-const deLete = async (req, res) => {
+const deleteUser = async (req, res) => {
   const id = req.params.id;
   const data = req.body;
 
-  const user = await userService.deLete(id, data);
+  const user = await userService.deleteUser(id, data);
 
   res.status(204).json();
 };
@@ -43,7 +43,7 @@ const deLete = async (req, res) => {
 module.exports = {
   getAll,
   getUser,
-  create,
-  update,
-  deLete,
+  createUser,
+  updateUser,
+  deleteUser,
 };
