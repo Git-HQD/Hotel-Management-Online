@@ -1,17 +1,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const apiRouter = require("./routers/api/index")
+const apiRouter = require("./routers/api/index");
+const { connectDB } = require("./models/index.model");
 
 require("dotenv").config();
-
-
-const { connectDB } = require('./models/index.model');
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/api/v1", apiRouter);
+app.use("/api", apiRouter);
 
 app.use(express.static("./src/public"));
 app.set("view engine", "ejs");
