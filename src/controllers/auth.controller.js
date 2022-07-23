@@ -1,10 +1,9 @@
 const authService = require("../services/auth.service");
+const config = require("../config/authentication");
 const jwt = require("jsonwebtoken");
-const config = require("../config/authencation");
 
 const login = async (req, res) => {
   const { username, password } = req.body;
-  const id = req.body;
 
   if (!username || !password) {
     return res.status(404).json({
@@ -14,17 +13,14 @@ const login = async (req, res) => {
 
   const handleLogin = await authService.handleLogin(username, password);
 
-  const token = jwt.sign(
-    id,
-    config.secret_key,
-    // { expiresIn: 60 * 15 },
-    config.algorithm,
-  );
+  if (!handleLogin) {
+    return res.status(404).json({
+      message: "Login Unsuccessful !",
+    });
+  }
 
   return res.status(200).json({
     message: "Login Successfully",
-    handleLogin,
-    token,
   });
 };
 
