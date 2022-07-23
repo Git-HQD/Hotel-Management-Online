@@ -1,5 +1,6 @@
 const db = require("../models/index.model");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const handleLogin = async (username, password) => {
   const isExist = await checkUsername(username);
@@ -31,6 +32,8 @@ const checkUsername = async (username) => {
 
   return found;
 };
+
+// const verifyToken = async(token);
 
 module.exports = {
   handleLogin,
