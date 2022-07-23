@@ -7,10 +7,10 @@ module.exports = {
         autoIncrement: true,
         type: Sequelize.DataTypes.INTEGER,
       },
-      name_service:{
+      name: {
         type: Sequelize.DataTypes.STRING,
       },
-      price:{
+      price: {
         type: Sequelize.DataTypes.DECIMAL
       },
     })

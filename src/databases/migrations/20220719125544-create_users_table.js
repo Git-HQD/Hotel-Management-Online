@@ -7,17 +7,22 @@ module.exports = {
         autoIncrement: true,
         type: Sequelize.DataTypes.INTEGER
       },
+      user_name: {
+        type: {
+          type: Sequelize.DataTypes.STRING
+        }
+      },
       first_name: {
         type: Sequelize.DataTypes.STRING
+      },
+      password: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false
       },
       last_name: {
         type: Sequelize.DataTypes.STRING
       },
       email: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: false
-      },
-      password: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false
       },
@@ -33,12 +38,12 @@ module.exports = {
       },
       created_at: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DataTypes.DATE,
         defaultValue: Sequelize.NOW
       },
       updated_at: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DataTypes.DATE,
         defaultValue: Sequelize.NOW
       }
     });
