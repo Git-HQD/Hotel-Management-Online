@@ -1,7 +1,7 @@
 const db = require("../models/index.model");
 const bcrypt = require("bcryptjs");
 
-const SALT = bcrypt.genSaltSync(20);
+const SALT = bcrypt.genSaltSync(10);
 
 const hashPassword = async (password) => {
   return bcrypt.hashSync(password, SALT);
