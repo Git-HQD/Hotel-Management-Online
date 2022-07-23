@@ -15,6 +15,15 @@
       <div class="row">
         <form class="row g-3" action="/postUser" method="POST">
           <div class="col-12 mt-3"><h1>Create A New User</h1></div>
+          <div class="col-md-8">
+            <label for="inputEmail4" class="form-label">UserName</label>
+            <input
+              type="text"
+              class="form-control"
+              name="userName"
+              placeholder="UserName"
+            />
+          </div>
           <div class="col-md-6">
             <label for="inputFirstName" class="form-label">First Name</label>
             <input
@@ -32,10 +41,6 @@
               name="lastName"
               placeholder="LastName"
             />
-          </div>
-          <div class="col-md-4">
-            <label for="inputIdcard" class="form-label">ID Card</label>
-            <input type="text" class="form-control" name="idcard" />
           </div>
           <div class="col-md-6">
             <label for="inputEmail4" class="form-label">Email</label>
@@ -55,16 +60,16 @@
               placeholder="Password"
             />
           </div>
-          <div class="col-12">
+          <div class="col-md-6">
             <label for="inputAddress" class="form-label">Address</label>
             <input
               type="text"
               class="form-control"
               name="address"
-              placeholder="1234 Main St"
+              placeholder="Address"
             />
           </div>
-          <div class="col-md-4">
+          <div class="col-md-6">
             <label for="inputPhone" class="form-label">Phone</label>
             <input
               type="text"
@@ -72,14 +77,6 @@
               name="phone"
               placeholder="Phone"
             />
-          </div>
-          <div class="col-md-4">
-            <label for="inputRoleID" class="form-label">Role</label>
-            <select name="roleID" class="form-select">
-              <option value="1">Administrator</option>
-              <option value="1">Customer</option>
-              <option value="1">Employeer</option>
-            </select>
           </div>
           <div class="col-12">
             <button type="submit" class="btn btn-primary">Sign in</button>
