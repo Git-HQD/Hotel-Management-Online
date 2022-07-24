@@ -1,13 +1,11 @@
 const authService = require("../services/auth.service");
-const config = require("../config/authentication");
-const jwt = require("jsonwebtoken");
 
 const login = async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
     return res.status(404).json({
-      message: "Invalid Username & Password",
+      message: "All input is required",
     });
   }
 
@@ -15,12 +13,13 @@ const login = async (req, res) => {
 
   if (!handleLogin) {
     return res.status(404).json({
-      message: "Login Unsuccessful !",
+      message: "Invalid Credentials !",
     });
   }
 
   return res.status(200).json({
     message: "Login Successfully",
+    handleLogin,
   });
 };
 
@@ -36,8 +35,13 @@ const register = async (req, res) => {
   });
 };
 
+const home = async (req, res) => {
+  res.status(200).send("Home Page");
+};
+
 module.exports = {
   register,
   login,
   logout,
+  home,
 };

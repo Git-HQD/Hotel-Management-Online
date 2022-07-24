@@ -4,27 +4,34 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 const handleLogin = async (username, password) => {
-  const isExist = await checkUsername(username);
+  const User = await check(username);
 
-  if (isExist) {
-    const compare = await bcrypt.compare(password, isExist.password);
+  if (User) {
+    const compare = await bcrypt.compare(password, User.password);
 
     if (!compare) {
       console.log("Invalid Password !");
     }
-    return compare;
   }
 
-  return isExist;
+  const token = jwt.sign(
+    { id: User.id, username },
+    config.signature,
+    { expiresIn: 60 * 15 },
+    { algorithm: config.algorithm },
+  );
+
+  User.token = token;
+
+  return { User, token };
 };
 
-const checkUsername = async (username) => {
+const check = async (username) => {
   const found = await db.users.findOne({
-    attributes: ["username", "password", "iam_role"],
+    attributes: ["id", "username", "password"],
     where: {
       username,
     },
-    raw: true,
   });
 
   if (!found) {
@@ -36,5 +43,5 @@ const checkUsername = async (username) => {
 
 module.exports = {
   handleLogin,
-  checkUsername,
+  check,
 };
