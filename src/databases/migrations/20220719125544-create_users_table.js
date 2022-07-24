@@ -12,12 +12,12 @@ module.exports = {
           type: Sequelize.DataTypes.STRING
         }
       },
-      first_name: {
-        type: Sequelize.DataTypes.STRING
-      },
       password: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false
+      },
+      first_name: {
+        type: Sequelize.DataTypes.STRING
       },
       last_name: {
         type: Sequelize.DataTypes.STRING
@@ -47,7 +47,8 @@ module.exports = {
         defaultValue: Sequelize.NOW
       }
     });
-  },
+  }, 
+
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('users');
   }
