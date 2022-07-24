@@ -1,5 +1,3 @@
-'use strict';
-
 const { DataTypes } = require("sequelize/types");
 
 module.exports = {
@@ -20,11 +18,11 @@ module.exports = {
           key: 'id'
         }
       },
-      room_type_id: {
+      room_id: {
         type: Sequelize.DataTypes.INTEGER,
         references: {
           model: {
-            tableName: 'room_types'
+            tableName: 'rooms'
           },
           key: 'id'
         },
