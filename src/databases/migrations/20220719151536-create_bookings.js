@@ -32,7 +32,7 @@ module.exports = {
         allowNull: false
       },
       status: {
-        type: Sequelize.DataTypes.ENUM('comfirmed', 'cancelled', 'pendding', 'check_in', 'check_out')
+        type: Sequelize.DataTypes.ENUM('confirmed', 'cancelled', 'pending', 'check_in', 'check_out')
       },
       created_at: {
         allowNull: false,

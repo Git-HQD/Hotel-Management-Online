@@ -1,5 +1,3 @@
-const { DataTypes } = require("sequelize/types");
-
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createTable('service_rooms', {
