@@ -1,34 +1,35 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('booking_rooms',{
-      id:{
+    await queryInterface.createTable('service_rooms', {
+      id: {
         allowNull: false,
-        primaryKey: true,
         autoIncrement: true,
+        primaryKey: true,
         type: Sequelize.DataTypes.INTEGER
       },
-      room_id:{
+      service_id: {
         type: Sequelize.DataTypes.INTEGER,
         references: {
           model: {
-            tableName: 'rooms',
+            tableName: 'services'
           },
           key: 'id'
-        },
+        }
       },
-      booking_id:{
+      room_id: {
         type: Sequelize.DataTypes.INTEGER,
         references: {
           model: {
-            tableName: 'bookings',
+            tableName: 'rooms'
           },
           key: 'id'
         },
+        allowNull: false
       }
     })
   },
 
   async down (queryInterface, Sequelize) {
-    return dropTable('booking_rooms')
+    await queryInterface.dropTable('service_rooms')
   }
 };

@@ -7,6 +7,15 @@ module.exports = {
         autoIncrement: true,
         type: Sequelize.DataTypes.INTEGER
       },
+      user_name: {
+        type: {
+          type: Sequelize.DataTypes.STRING
+        }
+      },
+      password: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false
+      },
       first_name: {
         type: Sequelize.DataTypes.STRING
       },
@@ -14,10 +23,6 @@ module.exports = {
         type: Sequelize.DataTypes.STRING
       },
       email: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: false
-      },
-      password: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false
       },
@@ -33,16 +38,17 @@ module.exports = {
       },
       created_at: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DataTypes.DATE,
         defaultValue: Sequelize.NOW
       },
       updated_at: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DataTypes.DATE,
         defaultValue: Sequelize.NOW
       }
     });
-  },
+  }, 
+
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('users');
   }

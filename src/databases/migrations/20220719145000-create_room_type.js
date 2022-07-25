@@ -1,24 +1,15 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
       await queryInterface.createTable('room_types',{
-        id:{
+        id: {
           allowNull:false,
           primaryKey:true,
           autoIncrement:true,
           type: Sequelize.DataTypes.INTEGER
         },
-        room_name:{
+        name: {
           type: Sequelize.DataTypes.STRING
         },
-        service_id:{
-          type: Sequelize.DataTypes.INTEGER,
-          references: {
-            model: {
-              tableName: 'services',
-            },
-            key: 'id'
-          },
-        }
       })
   },
 

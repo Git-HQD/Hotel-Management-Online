@@ -30,6 +30,19 @@ module.exports = {
       booking_date: {
         type: Sequelize.DataTypes.DATE,
         allowNull: false
+      },
+      status: {
+        type: Sequelize.DataTypes.ENUM('confirmed', 'cancelled', 'pending', 'check_in', 'check_out')
+      },
+      created_at: {
+        allowNull: false,
+        type: Sequelize.DataTypes.DATE,
+        defaultValue: Sequelize.NOW
+      },
+      updated_at: {
+        allowNull: false,
+        type: Sequelize.DataTypes.DATE,
+        defaultValue: Sequelize.NOW
       }
     })
   },

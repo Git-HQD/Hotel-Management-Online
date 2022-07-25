@@ -11,7 +11,7 @@ module.exports = {
           type: Sequelize.DataTypes.INTEGER,
           references: {
             model: {
-              tableName: 'room_type',
+              tableName: 'room_types',
             },
             key: 'id'
           },
@@ -21,6 +21,16 @@ module.exports = {
         },
         number_of_people:{
           type: Sequelize.DataTypes.INTEGER
+        },
+        created_at: {
+          allowNull: false,
+          type: Sequelize.DataTypes.DATE,
+          defaultValue: Sequelize.NOW
+        },
+        updated_at: {
+          allowNull: false,
+          type: Sequelize.DataTypes.DATE,
+          defaultValue: Sequelize.NOW
         }
       }) 
  },
