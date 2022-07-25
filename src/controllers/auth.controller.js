@@ -1,5 +1,5 @@
-const authService = require("../services/auth.service");
-const { registerValidator } = require("../validations/auth.validations");
+const authService = require('../services/auth.service');
+const { registerValidator } = require('../validations/auth.validations');
 
 // register
 const register = async (req, res) => {
@@ -13,7 +13,7 @@ const register = async (req, res) => {
 
   res.status(201).json({
     register,
-    message: "Register Successfully !",
+    message: 'Register Successfully !',
   });
 };
 
@@ -23,7 +23,7 @@ const login = async (req, res) => {
 
   if (!username || !password) {
     return res.status(404).json({
-      message: "All input is required",
+      message: 'All input is required',
     });
   }
 
@@ -31,12 +31,12 @@ const login = async (req, res) => {
 
   if (!handleLogin) {
     return res.status(404).json({
-      message: "Invalid Credentials !",
+      message: 'Invalid Credentials !',
     });
   }
 
   return res.status(200).json({
-    message: "Login Successfully",
+    message: 'Login Successfully',
     handleLogin,
   });
 };
@@ -44,13 +44,13 @@ const login = async (req, res) => {
 // logout
 const logout = async (req, res) => {
   res.status(200).json({
-    message: "Logout Successfully !",
+    message: 'Logout Successfully !',
   });
 };
 
 // home
 const home = async (req, res) => {
-  res.status(200).send("Home Page");
+  res.status(200).send('Home Page');
 };
 
 module.exports = {

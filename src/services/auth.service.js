@@ -1,7 +1,7 @@
-const db = require("../models/index.model");
-const config = require("../config/authentication");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
+const db = require('../models/index.model');
+const config = require('../config/authentication');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 const handleLogin = async (username, password) => {
   const User = await check(username);
@@ -10,7 +10,7 @@ const handleLogin = async (username, password) => {
     const compare = await bcrypt.compare(password, User.password);
 
     if (!compare) {
-      throw new Error("Invalid Password !");
+      throw new Error('Invalid Password !');
     }
   }
 
@@ -28,14 +28,14 @@ const handleLogin = async (username, password) => {
 
 const check = async (username) => {
   const found = await db.users.findOne({
-    attributes: ["id", "username", "password"],
+    attributes: ['id', 'username', 'password'],
     where: {
       username,
     },
   });
 
   if (!found) {
-    throw new Error("Invalid Username !");
+    throw new Error('Invalid Username !');
   }
 
   return found;
@@ -47,7 +47,7 @@ const register = async (data) => {
   });
 
   if (checkUsername) {
-    throw new Error(console.error("Username is exist"));
+    throw new Error(console.error('Username is exist'));
   }
 
   const checkEmail = await db.users.findOne({
@@ -55,7 +55,7 @@ const register = async (data) => {
   });
 
   if (checkEmail) {
-    throw new Error(console.error("Email is exist"));
+    throw new Error(console.error('Email is exist'));
   }
 
   const salt = await bcrypt.genSalt(10);

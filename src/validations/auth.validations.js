@@ -1,4 +1,4 @@
-const Joi = require("joi");
+const Joi = require('joi');
 
 const registerValidator = async (data) => {
   const rule = Joi.object({
@@ -9,12 +9,12 @@ const registerValidator = async (data) => {
     password: Joi.string()
       .min(6)
       .max(20)
-      .pattern(new RegExp("^[a-zA-Z0-9]{6,20}$"))
+      .pattern(new RegExp('^[a-zA-Z0-9]{6,20}$'))
       .required(),
     address: Joi.string().min(6).max(225).required(),
     phone: Joi.string().min(6).max(225).required(),
     iam_role: Joi.string()
-      .valid("Administrator", "Customer", "Employeer")
+      .valid('Administrator', 'Customer', 'Employeer')
       .required(),
   });
 

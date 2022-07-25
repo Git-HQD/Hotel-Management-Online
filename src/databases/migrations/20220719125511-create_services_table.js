@@ -1,9 +1,9 @@
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('services',{
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable('services', {
       id: {
         allowNull: false,
-        primaryKey:true,
+        primaryKey: true,
         autoIncrement: true,
         type: Sequelize.DataTypes.INTEGER,
       },
@@ -11,12 +11,12 @@ module.exports = {
         type: Sequelize.DataTypes.STRING,
       },
       price: {
-        type: Sequelize.DataTypes.DECIMAL
+        type: Sequelize.DataTypes.DECIMAL,
       },
-    })
- },
- 
-  async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('services')
-  }
+    });
+  },
+
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('services');
+  },
 };

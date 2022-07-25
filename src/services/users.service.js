@@ -1,5 +1,5 @@
-const db = require("../models/index.model");
-const bcrypt = require("bcryptjs");
+const db = require('../models/index.model');
+const bcrypt = require('bcryptjs');
 
 const SALT = bcrypt.genSaltSync(10);
 
@@ -19,7 +19,7 @@ const getUser = async (userId) => {
   });
 
   if (!user) {
-    throw new Error("User Not Found");
+    throw new Error('User Not Found');
   }
 
   return user;
