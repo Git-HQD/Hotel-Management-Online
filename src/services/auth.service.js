@@ -10,7 +10,7 @@ const handleLogin = async (username, password) => {
     const compare = await bcrypt.compare(password, User.password);
 
     if (!compare) {
-      console.log("Invalid Password !");
+      throw new Error("Invalid Password !");
     }
   }
 
@@ -35,13 +35,48 @@ const check = async (username) => {
   });
 
   if (!found) {
-    console.log("Invalid Username !");
+    throw new Error("Invalid Username !");
   }
 
   return found;
 };
 
+const register = async (data) => {
+  const checkUsername = await db.users.findOne({
+    where: { username: data.username },
+  });
+
+  if (checkUsername) {
+    throw new Error(console.error("Username is exist"));
+  }
+
+  const checkEmail = await db.users.findOne({
+    where: { email: data.email },
+  });
+
+  if (checkEmail) {
+    throw new Error(console.error("Email is exist"));
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(data.password, salt);
+
+  const newUser = await db.users.create({
+    username: data.username,
+    first_name: data.first_name,
+    last_name: data.last_name,
+    email: data.email,
+    password: hashPassword,
+    address: data.address,
+    phone: data.phone,
+    iam_role: data.iam_role,
+  });
+
+  return { newUser };
+};
+
 module.exports = {
   handleLogin,
   check,
+  register,
 };

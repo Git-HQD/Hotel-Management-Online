@@ -1,5 +1,23 @@
 const authService = require("../services/auth.service");
+const { registerValidator } = require("../validations/auth.validations");
 
+// register
+const register = async (req, res) => {
+  const { error } = await registerValidator(req.body);
+
+  if (error) return res.status(422).send(error.details[0].message);
+
+  const data = req.body;
+
+  const register = await authService.register(data);
+
+  res.status(201).json({
+    register,
+    message: "Register Successfully !",
+  });
+};
+
+// login
 const login = async (req, res) => {
   const { username, password } = req.body;
 
@@ -23,18 +41,14 @@ const login = async (req, res) => {
   });
 };
 
+// logout
 const logout = async (req, res) => {
   res.status(200).json({
     message: "Logout Successfully !",
   });
 };
 
-const register = async (req, res) => {
-  res.status(201).json({
-    message: "Register Successfully !",
-  });
-};
-
+// home
 const home = async (req, res) => {
   res.status(200).send("Home Page");
 };
