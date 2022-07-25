@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
-    "users",
+    'users',
     {
       username: DataTypes.STRING,
       first_name: DataTypes.STRING,
@@ -9,12 +9,12 @@ module.exports = (sequelize, DataTypes) => {
       password: DataTypes.STRING,
       address: DataTypes.STRING,
       phone: DataTypes.STRING,
-      iam_role: DataTypes.ENUM("Administrator", "Customer", "Employeer"),
+      iam_role: DataTypes.ENUM('Administrator', 'Customer', 'Employeer'),
     },
     {
       timestamps: true,
       sequelize,
-    }
+    },
   );
 
   return User;

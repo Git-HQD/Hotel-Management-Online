@@ -1,19 +1,19 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const apiRouter = require("./routers/api/index");
-const { connectDB } = require("./models/index.model");
+const express = require('express');
+const bodyParser = require('body-parser');
+const apiRouter = require('./routers/api/index');
+const { connectDB } = require('./models/index.model');
 
-require("dotenv").config();
+require('dotenv').config();
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/api", apiRouter);
+app.use('/api', apiRouter);
 
-app.use(express.static("./src/public"));
-app.set("view engine", "ejs");
-app.set("views", "./src/views");
+app.use(express.static('./src/public'));
+app.set('view engine', 'ejs');
+app.set('views', './src/views');
 
 connectDB();
 
