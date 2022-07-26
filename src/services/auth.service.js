@@ -3,42 +3,38 @@ const config = require('../config/authentication');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-const handleLogin = async (username, password) => {
-  const User = await check(username);
-
-  if (User) {
-    const compare = await bcrypt.compare(password, User.password);
-
-    if (!compare) {
-      throw new Error('Invalid Password !');
-    }
-  }
-
-  const token = jwt.sign(
-    { id: User.id, username },
-    config.signature,
-    { expiresIn: 60 * 15 },
-    { algorithm: config.algorithm },
-  );
-
-  User.token = token;
-
-  return { User, token };
-};
-
-const check = async (username) => {
-  const found = await db.users.findOne({
-    attributes: ['id', 'username', 'password'],
+const login = async (username, password) => {
+  const user = await db.users.findOne({
+    attributes: ['id', 'username', 'password', 'iam_role'],
     where: {
       username,
     },
   });
 
-  if (!found) {
-    throw new Error('Invalid Username !');
+  if (!user) {
+    code = 401;
+    throw new Error('Invalid Username & Password');
   }
 
-  return found;
+  if (user) {
+    const compare = await bcrypt.compare(password, user.password);
+
+    if (!compare) {
+      code = 401;
+      throw new Error('Invalid Username & Password');
+    }
+  }
+
+  const accessToken = jwt.sign(
+    { id: user.id, username, role: user.iam_role },
+    config.signature,
+    { expiresIn: 900 },
+    { algorithm: config.algorithm },
+  );
+
+  user.accessToken = accessToken;
+
+  return { user, accessToken };
 };
 
 const register = async (data) => {
@@ -47,7 +43,7 @@ const register = async (data) => {
   });
 
   if (checkUsername) {
-    throw new Error(console.error('Username is exist'));
+    throw new Error('Username is exist');
   }
 
   const checkEmail = await db.users.findOne({
@@ -55,7 +51,7 @@ const register = async (data) => {
   });
 
   if (checkEmail) {
-    throw new Error(console.error('Email is exist'));
+    throw new Error('Email is exist');
   }
 
   const salt = await bcrypt.genSalt(10);
@@ -72,11 +68,10 @@ const register = async (data) => {
     iam_role: data.iam_role,
   });
 
-  return { newUser };
+  return { newUser, token };
 };
 
 module.exports = {
-  handleLogin,
-  check,
+  login,
   register,
 };

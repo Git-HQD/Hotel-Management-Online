@@ -1,7 +1,6 @@
 const authService = require('../services/auth.service');
-const { registerValidator } = require('../validations/auth.validations');
+const { registerValidator } = require('../middleware/register.middleware');
 
-// register
 const register = async (req, res) => {
   const { error } = await registerValidator(req.body);
 
@@ -9,49 +8,47 @@ const register = async (req, res) => {
 
   const data = req.body;
 
+  if (!data) {
+    res.status(400).send('All input is required');
+  }
+
   const register = await authService.register(data);
 
-  res.status(201).json({
+  return res.status(201).json({
     register,
-    message: 'Register Successfully !',
+    message: 'Register Successfully',
   });
 };
 
-// login
+const home = async (req, res) => {
+  return res.status(200).send('Home Page');
+};
+
 const login = async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    return res.status(404).json({
-      message: 'All input is required',
+    return res.status(422).json({
+      message: 'Username or Password is not correct',
     });
   }
 
-  const handleLogin = await authService.handleLogin(username, password);
-
-  if (!handleLogin) {
-    return res.status(404).json({
-      message: 'Invalid Credentials !',
-    });
-  }
+  const login = await authService.login(username, password);
 
   return res.status(200).json({
     message: 'Login Successfully',
-    handleLogin,
+    login,
   });
 };
 
-// logout
 const logout = async (req, res) => {
-  res.status(200).json({
-    message: 'Logout Successfully !',
+  
+  return res.status(200).json({
+    token,
+    message: 'Logout Successfully',
   });
 };
 
-// home
-const home = async (req, res) => {
-  res.status(200).send('Home Page');
-};
 
 module.exports = {
   register,
