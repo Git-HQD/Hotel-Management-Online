@@ -5,14 +5,11 @@ const bcrypt = require('bcryptjs');
 
 const login = async (username, password) => {
   const user = await db.users.findOne({
-    attributes: ['id', 'username', 'password', 'iam_role'],
     where: {
       username,
     },
   });
-
   if (!user) {
-    code = 401;
     throw new Error('Invalid Username & Password');
   }
 
@@ -20,7 +17,6 @@ const login = async (username, password) => {
     const compare = await bcrypt.compare(password, user.password);
 
     if (!compare) {
-      code = 401;
       throw new Error('Invalid Username & Password');
     }
   }
@@ -28,34 +24,29 @@ const login = async (username, password) => {
   const accessToken = jwt.sign(
     { id: user.id, username, role: user.iam_role },
     config.signature,
-    { expiresIn: 900 },
-    { algorithm: config.algorithm },
+    { expiresIn: parseInt(config.expiresInLogin) },
   );
 
-  user.accessToken = accessToken;
-
-  return { user, accessToken };
+  return accessToken;
 };
 
 const register = async (data) => {
-  const checkUsername = await db.users.findOne({
+  const userExists = await db.users.findOne({
     where: { username: data.username },
   });
 
-  if (checkUsername) {
+  if (userExists) {
     throw new Error('Username is exist');
   }
 
-  const checkEmail = await db.users.findOne({
+  const emailExists = await db.users.findOne({
     where: { email: data.email },
   });
 
-  if (checkEmail) {
+  if (emailExists) {
     throw new Error('Email is exist');
   }
-
-  const salt = await bcrypt.genSalt(10);
-  const hashPassword = await bcrypt.hash(data.password, salt);
+  const hashPassword = await bcrypt.hash(data.password, parseInt(config.salt));
 
   const newUser = await db.users.create({
     username: data.username,
@@ -68,7 +59,7 @@ const register = async (data) => {
     iam_role: data.iam_role,
   });
 
-  return { newUser, token };
+  return { newUser };
 };
 
 module.exports = {

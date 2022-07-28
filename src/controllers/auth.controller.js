@@ -1,27 +1,18 @@
 const authService = require('../services/auth.service');
-const { registerValidator } = require('../middleware/register.middleware');
 
 const register = async (req, res) => {
-  const { error } = await registerValidator(req.body);
-
-  if (error) return res.status(422).send(error.details[0].message);
-
   const data = req.body;
 
   if (!data) {
-    res.status(400).send('All input is required');
+    res.status(400).json('All input is required');
   }
 
-  const register = await authService.register(data);
+  const user = await authService.register(data);
 
   return res.status(201).json({
-    register,
+    user,
     message: 'Register Successfully',
   });
-};
-
-const home = async (req, res) => {
-  return res.status(200).send('Home Page');
 };
 
 const login = async (req, res) => {
@@ -33,26 +24,22 @@ const login = async (req, res) => {
     });
   }
 
-  const login = await authService.login(username, password);
+  const handleLogin = await authService.login(username, password);
 
   return res.status(200).json({
     message: 'Login Successfully',
-    login,
+    handleLogin,
   });
 };
 
 const logout = async (req, res) => {
-  
   return res.status(200).json({
-    token,
     message: 'Logout Successfully',
   });
 };
-
 
 module.exports = {
   register,
   login,
   logout,
-  home,
 };

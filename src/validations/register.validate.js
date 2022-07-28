@@ -14,11 +14,11 @@ const registerValidator = async (data) => {
     address: Joi.string().min(6).max(225).required(),
     phone: Joi.string().min(6).max(225).required(),
     iam_role: Joi.string()
-      .valid('Administrator', 'Customer', 'Employeer')
+      .valid('administrator', 'customer', 'employeer')
       .required(),
   });
 
   return rule.validate(data);
 };
 
-module.exports.registerValidator = registerValidator;
+module.exports = registerValidator;
