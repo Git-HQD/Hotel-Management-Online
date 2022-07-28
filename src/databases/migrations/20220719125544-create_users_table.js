@@ -7,20 +7,18 @@ module.exports = {
         autoIncrement: true,
         type: Sequelize.DataTypes.INTEGER
       },
-      user_name: {
-        type: {
-          type: Sequelize.DataTypes.STRING
-        }
+      username: {
+        type: Sequelize.DataTypes.STRING
       },
       password: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false
       },
-      first_name: {
-        type: Sequelize.DataTypes.STRING
+      firstname: {
+        type: Sequelize.DataTypes.STRING,
       },
-      last_name: {
-        type: Sequelize.DataTypes.STRING
+      lastname: {
+        type: Sequelize.DataTypes.STRING,
       },
       email: {
         type: Sequelize.DataTypes.STRING,
@@ -31,10 +29,10 @@ module.exports = {
         allowNull: false
       },
       phone: {
-        type: Sequelize.DataTypes.STRING,
+        type: Sequelize.DataTypes.INTEGER
       },
       role: {
-        type: Sequelize.DataTypes.ENUM('admin', 'custommer', 'employee')
+        type: Sequelize.DataTypes.ENUM('admin', 'customer', 'employee')
       },
       created_at: {
         allowNull: false,
