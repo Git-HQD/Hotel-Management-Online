@@ -1,23 +1,25 @@
 const roomsService = require ( "../services/");
 const bodyParser = require('body-parser');
-const roomsModel = require('../models/rooms.model');
 const roomsService = require('../services/rooms.service');
 
 const bodyJson = bodyParser.json();
 
 const getRooms = async(req,res)=>{
-   const rooms = await roomsService.getRoom();
+   const room = await roomsService.getRoom();
 
-   res.status(200).json(rooms);
+   res.status(200).json(room);
 }
 
 const search = async (req, res) => {
-   const rooms = 
+   const room = await roomsService.search();
 
-   res.status(200).json(rooms);
+   res.status(200).json(room);
 
 }
 
+const deleteRoom = async()=>{
+
+}
 module.exports = {
    search,
    getRooms

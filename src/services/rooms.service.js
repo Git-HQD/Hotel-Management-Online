@@ -1,21 +1,19 @@
-const db = require('../models/dbconnect.model');
-const DB_rooms = require('../models/rooms.model');
+const { Error } = require('sequelize');
+const db = require('../models/index.model');
 
 //Get all room follow id
 const getroom = async() =>{
-    const rooms = await DB_rooms.findAll({
-        id
-    });
-    return rooms;
+    const room = await db.rooms.findAll();
+    return room;
 };
 //Get room follow req Date form custommer
-const search = async(req,res,err) => {
+const search = async() => {
     const startDate = req.body;
     const endDate = req.body;
     if(!startDate || !endDate ){
-        throw(err);  
+        throw new Error('Not Date To Find Room') ;  
     }
-    return DB_rooms.rooms;
+    return db.rooms;
 };
 
 module.exports = {
