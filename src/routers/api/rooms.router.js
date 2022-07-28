@@ -4,8 +4,14 @@ const { notemtyDate } = require('../../middleware/rooms.midleware');
 
 const router = express.Router();
 
-router.get('/',roomController);
+router.get('/',roomController.getRoom);
 
-router.get('/search', notemtyDate, roomController.search)
+router.get('/:id', notemtyDate, roomController.searchRoom);
+
+router.post('/', roomController.createRoom);
+
+router.put('/:id',roomController.updateRoom);
+
+router.delete('/:id', roomController.deleteRoom);
 
 module.exports = router;
