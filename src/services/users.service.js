@@ -1,11 +1,6 @@
 const db = require('../models/index.model');
+const config = require('../config/authentication');
 const bcrypt = require('bcryptjs');
-
-const SALT = bcrypt.genSaltSync(10);
-
-const hashPassword = async (password) => {
-  return bcrypt.hashSync(password, SALT);
-};
 
 const getAll = async () => {
   const users = await db.users.findAll();
@@ -26,14 +21,14 @@ const getUser = async (userId) => {
 };
 
 const createUser = async (data) => {
-  const hashPwdBcrypt = await hashPassword(data.password);
+  const hashPassword = await bcrypt.hash(data.password, parseInt(config.salt));
 
   return db.users.create({
     username: data.username,
     first_name: data.first_name,
     last_name: data.last_name,
     email: data.email,
-    password: hashPwdBcrypt,
+    password: hashPassword,
     address: data.address,
     phone: data.phone,
     iam_role: data.iam_role,
@@ -62,7 +57,6 @@ module.exports = {
   getAll,
   getUser,
   createUser,
-  hashPassword,
   updateUser,
   deleteUser,
 };

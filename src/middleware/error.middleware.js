@@ -1,18 +1,12 @@
-const notFound = async (req, res, next) => {
-  const error = new Error(`Not Found = ${req.originalUrl}`);
-  res.status(404);
-
-  next(error);
-};
-
 const errorHandler = async (err, req, res, next) => {
-  res.status(err.status || 500);
-  res.send({
+  res.status(err.status || 500).json({
     error: {
       status: err.status || 500,
-      message: err.message,
+      message: err.message || 'Internal Server Error',
     },
   });
+
+  return next();
 };
 
-module.exports = { notFound, errorHandler };
+module.exports = errorHandler;

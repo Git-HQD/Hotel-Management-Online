@@ -1,45 +1,35 @@
 const authService = require('../services/auth.service');
 
-const register = async (req, res) => {
+const register = async (req, res, next) => {
   const data = req.body;
 
-  if (!data) {
-    res.status(400).json('All input is required');
+  try {
+    await authService.register(data);
+
+    res.status(201).json({
+      message: 'Register Successfully',
+    });
+  } catch (err) {
+    next(err);
   }
-
-  const user = await authService.register(data);
-
-  return res.status(201).json({
-    user,
-    message: 'Register Successfully',
-  });
 };
 
-const login = async (req, res) => {
+const login = async (req, res, next) => {
   const { username, password } = req.body;
 
-  if (!username || !password) {
-    return res.status(422).json({
-      message: 'Username or Password is not correct',
+  try {
+    const handleLogin = await authService.handleLogin(username, password);
+
+    res.status(200).json({
+      message: 'Login Successfully',
+      handleLogin,
     });
+  } catch (err) {
+    next(err);
   }
-
-  const handleLogin = await authService.login(username, password);
-
-  return res.status(200).json({
-    message: 'Login Successfully',
-    handleLogin,
-  });
-};
-
-const logout = async (req, res) => {
-  return res.status(200).json({
-    message: 'Logout Successfully',
-  });
 };
 
 module.exports = {
   register,
   login,
-  logout,
 };

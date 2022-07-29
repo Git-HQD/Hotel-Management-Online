@@ -1,13 +1,8 @@
 const registerValidator = require('../validations/register.validate');
-const db = require('../models/index.model');
 
-const checkSyntax = async (req, res, next) => {
+const checkReqRigister = async (req, res, next) => {
   try {
     const { error } = await registerValidator(req.body);
-
-    if (error) {
-      res.status(422).send(error.details[0].message);
-    }
 
     next(error);
   } catch (error) {
@@ -15,4 +10,4 @@ const checkSyntax = async (req, res, next) => {
   }
 };
 
-module.exports = checkSyntax;
+module.exports = checkReqRigister;

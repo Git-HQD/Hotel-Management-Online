@@ -2,27 +2,28 @@ const db = require('../models/index.model');
 const config = require('../config/authentication');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const userService = require('../services/users.service');
+const { Op } = require('sequelize');
 
-const login = async (username, password) => {
+const handleLogin = async (username, password) => {
   const user = await db.users.findOne({
     where: {
       username,
     },
   });
+
   if (!user) {
-    throw new Error('Invalid Username & Password');
+    throw new Error('Invalid Username & Password', 404);
   }
 
-  if (user) {
-    const compare = await bcrypt.compare(password, user.password);
+  const compare = await bcrypt.compare(password, user.password);
 
-    if (!compare) {
-      throw new Error('Invalid Username & Password');
-    }
+  if (!compare) {
+    throw new Error('Invalid Username & Password', 404);
   }
 
   const accessToken = jwt.sign(
-    { id: user.id, username, role: user.iam_role },
+    { id: user.id, username, role: user.role },
     config.signature,
     { expiresIn: parseInt(config.expiresInLogin) },
   );
@@ -31,38 +32,22 @@ const login = async (username, password) => {
 };
 
 const register = async (data) => {
-  const userExists = await db.users.findOne({
-    where: { username: data.username },
+  const isExist = await db.users.findOne({
+    where: {
+      [Op.or]: [{ username: data.username }, { email: data.email }],
+    },
   });
 
-  if (userExists) {
-    throw new Error('Username is exist');
+  if (isExist) {
+    throw new Error('Already Exist !', 501);
   }
 
-  const emailExists = await db.users.findOne({
-    where: { email: data.email },
-  });
-
-  if (emailExists) {
-    throw new Error('Email is exist');
-  }
-  const hashPassword = await bcrypt.hash(data.password, parseInt(config.salt));
-
-  const newUser = await db.users.create({
-    username: data.username,
-    first_name: data.first_name,
-    last_name: data.last_name,
-    email: data.email,
-    password: hashPassword,
-    address: data.address,
-    phone: data.phone,
-    iam_role: data.iam_role,
-  });
+  const newUser = await userService.createUser(data);
 
   return { newUser };
 };
 
 module.exports = {
-  login,
+  handleLogin,
   register,
 };

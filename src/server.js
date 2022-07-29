@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const apiRouter = require('./routers/api/index');
 const homeRouter = require('./routers/page/homePage.router');
 const { connectDB } = require('./models/index.model');
-const { notFound, errorHandler } = require('./middleware/error.middleware');
+const errorHandler = require('./middleware/error.middleware');
 
 require('dotenv').config();
 
@@ -21,7 +21,6 @@ app.use(express.static('./src/public'));
 app.set('view engine', 'ejs');
 app.set('views', './src/views');
 
-app.use(notFound);
 app.use(errorHandler);
 
 connectDB();
