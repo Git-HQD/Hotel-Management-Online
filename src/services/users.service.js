@@ -54,7 +54,7 @@ const updateUser = async (userId, data) => {
 
 const deleteUser = async (userId, data) => {
   const user = await getUser(userId);
-
+  
   await user.destroy(data);
 };
 

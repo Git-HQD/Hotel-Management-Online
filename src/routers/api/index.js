@@ -9,6 +9,6 @@ router.use("/users", userRouter);
 
 router.use("/auth", authRouter);
 
-router.use("/room",roomRouter);
+router.use("/room", roomRouter);
 
 module.exports = router;
