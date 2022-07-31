@@ -7,10 +7,8 @@ module.exports = {
         autoIncrement: true,
         type: Sequelize.DataTypes.INTEGER
       },
-      user_name: {
-        type: {
-          type: Sequelize.DataTypes.STRING
-        }
+      username: {
+        type: Sequelize.DataTypes.STRING
       },
       password: {
         type: Sequelize.DataTypes.STRING,
@@ -34,7 +32,7 @@ module.exports = {
         type: Sequelize.DataTypes.STRING,
       },
       role: {
-        type: Sequelize.DataTypes.ENUM('admin', 'custommer', 'employee')
+        type: Sequelize.DataTypes.ENUM('admin', 'customer', 'employee'),
       },
       created_at: {
         allowNull: false,
@@ -45,9 +43,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DataTypes.DATE,
         defaultValue: Sequelize.NOW
-      }
+      },
     });
-  }, 
+  },
 
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('users');
