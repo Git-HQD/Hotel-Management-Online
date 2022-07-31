@@ -1,12 +1,13 @@
 const express = require('express');
 const authController = require('../../controllers/auth.controller.js');
-const checkReqRigister = require('../../middleware/checkReqRigister.middleware');
-const checkReqLogin = require('../../middleware/checkReqLogin.middleware');
+const authMiddleware = require('../../middleware/auth.middleware');
 
 const router = express.Router();
 
-router.post('/register', checkReqRigister, authController.register);
+router.post('/register', authMiddleware.verifyJSONRigister, authController.register);
 
-router.post('/login', checkReqLogin, authController.login);
+router.post('/login', authMiddleware.verifyJSONLogin, authController.login);
+
+router.put('/changePassword', authController.changePassword);
 
 module.exports = router;

@@ -13,10 +13,19 @@ const registerValidator = async (data) => {
       .required(),
     address: Joi.string().min(6).max(225).required(),
     phone: Joi.string().min(6).max(225).required(),
-    role: Joi.string().valid('admin', 'customer', 'employeer').required(),
+    role: Joi.string().valid('admin', 'customer', 'employee').required(),
   });
 
   return rule.validate(data);
 };
 
-module.exports = registerValidator;
+const loginValidator = async (data) => {
+  const rule = Joi.object({
+    username: Joi.string().alphanum().min(1).required(),
+    password: Joi.string().min(1).required(),
+  });
+
+  return rule.validate(data);
+};
+
+module.exports = { registerValidator, loginValidator };

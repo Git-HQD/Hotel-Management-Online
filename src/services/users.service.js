@@ -31,7 +31,7 @@ const createUser = async (data) => {
     password: hashPassword,
     address: data.address,
     phone: data.phone,
-    iam_role: data.iam_role,
+    role: data.role,
   });
 };
 

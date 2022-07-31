@@ -1,10 +1,8 @@
 const authService = require('../services/auth.service');
 
 const register = async (req, res, next) => {
-  const data = req.body;
-
   try {
-    await authService.register(data);
+    await authService.hangleRegister(req.body.data);
 
     res.status(201).json({
       message: 'Register Successfully',
@@ -18,11 +16,26 @@ const login = async (req, res, next) => {
   const { username, password } = req.body;
 
   try {
-    const handleLogin = await authService.handleLogin(username, password);
+    const userLogin = await authService.handleLogin(username, password);
 
     res.status(200).json({
       message: 'Login Successfully',
-      handleLogin,
+      userLogin,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const changePassword = async (req, res, next) => {
+  const { id } = req.params;
+  const { password, newPassword } = req.body;
+
+  try {
+    await authService.handleChangePassword(id, password, newPassword);
+
+    res.status(200).json({
+      message: 'Change Password Successfully',
     });
   } catch (err) {
     next(err);
@@ -32,4 +45,5 @@ const login = async (req, res, next) => {
 module.exports = {
   register,
   login,
+  changePassword,
 };

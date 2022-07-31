@@ -47,7 +47,26 @@ const register = async (data) => {
   return { newUser };
 };
 
+const handleChangePassword = async (id, password, newPassword) => {
+  const user = await handleLogin.user(id);
+
+  const compare = await bcrypt.compare(password, user.password);
+
+  if (!compare) {
+    throw new Error('Incorrect Password , Please re-enter !');
+  }
+
+  const hashNewPassword = await bcrypt.hash(newPassword, parseInt(config.salt));
+
+  user.password = hashNewPassword;
+
+  const changePassword = await user.save(user);
+
+  return changePassword;
+};
+
 module.exports = {
   handleLogin,
   register,
+  handleChangePassword,
 };

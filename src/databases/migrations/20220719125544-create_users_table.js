@@ -5,28 +5,28 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
-        type: Sequelize.DataTypes.INTEGER,
+        type: Sequelize.DataTypes.INTEGER
       },
       username: {
-        type: Sequelize.DataTypes.STRING,
+        type: Sequelize.DataTypes.STRING
       },
       password: {
         type: Sequelize.DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
       },
       first_name: {
-        type: Sequelize.DataTypes.STRING,
+        type: Sequelize.DataTypes.STRING
       },
       last_name: {
-        type: Sequelize.DataTypes.STRING,
+        type: Sequelize.DataTypes.STRING
       },
       email: {
         type: Sequelize.DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
       },
       address: {
         type: Sequelize.DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
       },
       phone: {
         type: Sequelize.DataTypes.STRING,
@@ -37,17 +37,17 @@ module.exports = {
       created_at: {
         allowNull: false,
         type: Sequelize.DataTypes.DATE,
-        defaultValue: Sequelize.NOW,
+        defaultValue: Sequelize.NOW
       },
       updated_at: {
         allowNull: false,
         type: Sequelize.DataTypes.DATE,
-        defaultValue: Sequelize.NOW,
+        defaultValue: Sequelize.NOW
       },
     });
   },
 
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('users');
-  },
+  }
 };
