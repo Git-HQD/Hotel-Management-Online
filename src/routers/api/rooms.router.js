@@ -1,5 +1,5 @@
 const bodyParser = require('body-parser');
-const express = require("express");
+const express = require('express');
 const roomController = require('../../controllers/rooms.controllers');
 const { notemtyDate, notemtyId } = require('../../middleware/rooms.midleware');
 

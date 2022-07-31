@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const room = sequelize.define(
-    "rooms",
+    "Room",
     {
       price: DataTypes.DECIMAL,
       number_of_people: DataTypes.INTEGER,

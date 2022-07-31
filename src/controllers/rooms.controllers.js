@@ -1,4 +1,3 @@
-const bodyParser = require('body-parser');
 const roomsService = require('../services/rooms.service');
 
 //Get all room in Hotel

@@ -1,14 +1,13 @@
-const { json } = require('body-parser');
 const { Error } = require('sequelize');
 const db = require('../models/index.model');
 
 //Get all room follow id
 const getRoom = async() =>{
-    return room =  await db.rooms.findAll();
+    return room =  await db.Room.findAll();
 };
 //Get room follow req Date form custommer
 const searchRoom = async ( roomId, startDate, endDate ) => {
-    const room = await db.rooms.findOne({
+    const room = await db.Room.findOne({
         where: { id : roomId }
     });
     //Error if customer accept startdate or enddate
