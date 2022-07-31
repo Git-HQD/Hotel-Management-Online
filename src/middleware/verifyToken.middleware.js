@@ -1,19 +1,18 @@
 const config = require('../config/authentication');
 const jwt = require('jsonwebtoken');
 
-const verifyToken = async (req, res, next) => {
-  const token = req.headers['x-access-token'];
+const verifyToken = (req, res, next) => {
+  const token = req.headers['authorization'];
 
-  if (!token) return res.status(403).json('Unvalid Token !');
+  if (!token) return res.status(401).json('Access Denied');
 
   try {
-    const decoded = jwt.verify(token, config.signature);
-    req.user = decoded;
-  } catch (e) {
-    return res.status(401).json('Invalid Token');
+    const { userPayload } = jwt.verify(token, config.signature);
+    req.user = userPayload;
+    next();
+  } catch (err) {
+    return res.status(401).json(err);
   }
-
-  return next();
 };
 
 module.exports = verifyToken;

@@ -2,81 +2,71 @@ const db = require('../models/index.model');
 const config = require('../config/authentication');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const userService = require('../services/users.service');
+const { Op } = require('sequelize');
 
 const handleLogin = async (username, password) => {
-  const User = await check(username);
-
-  if (User) {
-    const compare = await bcrypt.compare(password, User.password);
-
-    if (!compare) {
-      throw new Error('Invalid Password !');
-    }
-  }
-
-  const token = jwt.sign(
-    { id: User.id, username },
-    config.signature,
-    { expiresIn: 60 * 15 },
-    { algorithm: config.algorithm },
-  );
-
-  User.token = token;
-
-  return { User, token };
-};
-
-const check = async (username) => {
-  const found = await db.users.findOne({
-    attributes: ['id', 'username', 'password'],
+  const user = await db.users.findOne({
     where: {
       username,
     },
   });
 
-  if (!found) {
-    throw new Error('Invalid Username !');
+  if (!user) {
+    throw new Error('Invalid Username & Password', 404);
   }
 
-  return found;
+  const compare = await bcrypt.compare(password, user.password);
+
+  if (!compare) {
+    throw new Error('Invalid Username & Password', 404);
+  }
+
+  const accessToken = jwt.sign(
+    { id: user.id, username, role: user.role },
+    config.signature,
+    { expiresIn: parseInt(config.expiresInLogin) },
+  );
+
+  return accessToken;
 };
 
 const register = async (data) => {
-  const checkUsername = await db.users.findOne({
-    where: { username: data.username },
+  const isExist = await db.users.findOne({
+    where: {
+      [Op.or]: [{ username: data.username }, { email: data.email }],
+    },
   });
 
-  if (checkUsername) {
-    throw new Error(console.error('Username is exist'));
+  if (isExist) {
+    throw new Error('Already Exist !', 501);
   }
 
-  const checkEmail = await db.users.findOne({
-    where: { email: data.email },
-  });
-
-  if (checkEmail) {
-    throw new Error(console.error('Email is exist'));
-  }
-
-  const salt = await bcrypt.genSalt(10);
-  const hashPassword = await bcrypt.hash(data.password, salt);
-
-  const newUser = await db.users.create({
-    username: data.username,
-    first_name: data.first_name,
-    last_name: data.last_name,
-    email: data.email,
-    password: hashPassword,
-    address: data.address,
-    phone: data.phone,
-    iam_role: data.iam_role,
-  });
+  const newUser = await userService.createUser(data);
 
   return { newUser };
 };
 
+const handleChangePassword = async (id, password, newPassword) => {
+  const user = await handleLogin.user(id);
+
+  const compare = await bcrypt.compare(password, user.password);
+
+  if (!compare) {
+    throw new Error('Incorrect Password , Please re-enter !');
+  }
+
+  const hashNewPassword = await bcrypt.hash(newPassword, parseInt(config.salt));
+
+  user.password = hashNewPassword;
+
+  const changePassword = await user.save(user);
+
+  return changePassword;
+};
+
 module.exports = {
   handleLogin,
-  check,
   register,
+  handleChangePassword,
 };

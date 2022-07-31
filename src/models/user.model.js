@@ -3,16 +3,18 @@ module.exports = (sequelize, DataTypes) => {
     'users',
     {
       username: DataTypes.STRING,
+      password: DataTypes.STRING,
       first_name: DataTypes.STRING,
       last_name: DataTypes.STRING,
       email: DataTypes.STRING,
-      password: DataTypes.STRING,
       address: DataTypes.STRING,
       phone: DataTypes.STRING,
-      iam_role: DataTypes.ENUM('Administrator', 'Customer', 'Employeer'),
+      role: DataTypes.ENUM('admin', 'customer', 'employee'),
     },
     {
       timestamps: true,
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
       sequelize,
     },
   );

@@ -1,6 +1,8 @@
 require('dotenv').config();
 
 module.exports = {
-  'algorithm': process.env.JWT_ALGORITHM,
-  'signature': process.env.JWT_SIGNATURE,
+  signature: process.env.JWT_SIGNATURE,
+  expiresInLogin: process.env.JWT_EXPIRES_IN_lOGIN,
+
+  salt: process.env.SALT,
 };

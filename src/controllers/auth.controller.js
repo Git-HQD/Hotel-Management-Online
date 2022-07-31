@@ -1,61 +1,49 @@
 const authService = require('../services/auth.service');
-const { registerValidator } = require('../validations/auth.validations');
 
-// register
-const register = async (req, res) => {
-  const { error } = await registerValidator(req.body);
+const register = async (req, res, next) => {
+  try {
+    await authService.hangleRegister(req.body.data);
 
-  if (error) return res.status(422).send(error.details[0].message);
-
-  const data = req.body;
-
-  const register = await authService.register(data);
-
-  res.status(201).json({
-    register,
-    message: 'Register Successfully !',
-  });
+    res.status(201).json({
+      message: 'Register Successfully',
+    });
+  } catch (err) {
+    next(err);
+  }
 };
 
-// login
-const login = async (req, res) => {
+const login = async (req, res, next) => {
   const { username, password } = req.body;
 
-  if (!username || !password) {
-    return res.status(404).json({
-      message: 'All input is required',
+  try {
+    const userLogin = await authService.handleLogin(username, password);
+
+    res.status(200).json({
+      message: 'Login Successfully',
+      userLogin,
     });
+  } catch (err) {
+    next(err);
   }
-
-  const handleLogin = await authService.handleLogin(username, password);
-
-  if (!handleLogin) {
-    return res.status(404).json({
-      message: 'Invalid Credentials !',
-    });
-  }
-
-  return res.status(200).json({
-    message: 'Login Successfully',
-    handleLogin,
-  });
 };
 
-// logout
-const logout = async (req, res) => {
-  res.status(200).json({
-    message: 'Logout Successfully !',
-  });
-};
+const changePassword = async (req, res, next) => {
+  const { id } = req.params;
+  const { password, newPassword } = req.body;
 
-// home
-const home = async (req, res) => {
-  res.status(200).send('Home Page');
+  try {
+    await authService.handleChangePassword(id, password, newPassword);
+
+    res.status(200).json({
+      message: 'Change Password Successfully',
+    });
+  } catch (err) {
+    next(err);
+  }
 };
 
 module.exports = {
   register,
   login,
-  logout,
-  home,
+  changePassword,
 };
