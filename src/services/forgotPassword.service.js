@@ -42,9 +42,9 @@ const resetPassword = async (id, newPassword) => {
 
   user.password = hashNewPassword;
 
-  const resetPassword = await user.save(user);
+  await user.save(user);
 
-  return resetPassword;
+  return;
 };
 
 module.exports = {

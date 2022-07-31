@@ -16,11 +16,11 @@ const login = async (req, res, next) => {
   const { username, password } = req.body;
 
   try {
-    const userLogin = await authService.handleLogin(username, password);
+    const tokens = await authService.handleLogin(username, password);
 
     res.status(200).json({
       message: 'Login Successfully',
-      userLogin,
+      tokens,
     });
   } catch (err) {
     next(err);
