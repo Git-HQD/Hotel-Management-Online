@@ -11,4 +11,6 @@ router.use("/auth", authRouter);
 
 router.use("/room", roomRouter);
 
+router.use("/service", serviceRouter);
+
 module.exports = router;

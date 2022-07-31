@@ -1,4 +1,3 @@
-const { json } = require('body-parser');
 const { Error } = require('sequelize');
 const db = require('../models/index.model');
 
