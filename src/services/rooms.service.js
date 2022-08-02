@@ -11,28 +11,27 @@ const searchRoom = async ( roomId, startDate, endDate ) => {
         where: { id : roomId }
     });
     //Error if customer accept startdate or enddate
-    if(!startDate || !endDate) {
-        throw new Error({ message: "Room not Found"});
+    if(!room) {
+        throw new Error("Room not found");
     }
     return room;
 };
 
 //Create room
 const createRoom = async ( data ) =>{
-    const newRoom = new db.create({ price, number_of_people });
-    await newRoom.save( data );
-    
-    return newRoom;
+    return await db.Room.create({ 
+        price: data.price,
+        number_of_people: data.number_of_people 
+    });
 };
 
 //update room
-const updateRoom = async( roomId ) =>{
-    const room = await searchRoom( roomId );
-    
+const updateRoom = async( roomId, data ) =>{
+    const room = await searchRoom(roomId);
     //error If done found room in system 
-    if ( !room ){
-        throw new Error({ message: "Your room is wrong" })
-    }
+    room.price = data.price;
+    room.number_of_people = data.number_of_people
+    await room.save(room);
     return room;
 };
 

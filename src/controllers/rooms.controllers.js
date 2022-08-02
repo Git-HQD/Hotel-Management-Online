@@ -22,25 +22,25 @@ const createRoom = async( req, res ) =>{
    const data = req.body;
    const room = await roomsService.createRoom( data );
    
-   res.status(201).json( room,  {message: "Create Succesfull!"}) 
+   res.status(201).json( room );
 }
 
 //Update room 
 const updateRoom = async( req, res ) =>{
    const id = req.params.id;
    const data = req.body;
-   const room = await roomsService.updateRoom( data, id );
+   const room = await roomsService.updateRoom( id, data );
    
-   res.status(200).json( room,  {message: "Update Succesfull!"})
+   res.status(200).json( room )
 }
 
 //Delete Room
 const deleteRoom = async( req, res )=>{
    const id = req.params.id;
    const data = req.body;
-   const room = await roomsService.deleteRoom( data, id );
+   const room = await roomsService.deleteRoom( id, data );
 
-   res.status(200).json( room, {message: "Delete Done!"})
+   res.status(200).json( room )
 }
 module.exports = {
    getRoom,

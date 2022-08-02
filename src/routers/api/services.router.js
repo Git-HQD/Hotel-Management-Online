@@ -1,18 +1,16 @@
-const bodyParser = require('body-parser');
 const serviceController = require('../../controllers/services.controller');
 const express = require('express');
 
 const router = express.Router();
-const bodyJson = bodyParser.json();
 
-router.get('/', bodyJson, serviceController.getService);
+router.get('/', serviceController.getService);
 
-router.get('/:id', bodyJson, serviceController.searchService);
+router.get('/:id', serviceController.searchService);
 
-router.post('/', bodyJson, serviceController.createService);
+router.post('/', serviceController.createService);
 
-router.put('/:id', bodyJson, serviceController.updateService);
+router.put('/:id', serviceController.updateService);
 
-router.delete('/:id', bodyJson, serviceController.deleteService);
+router.delete('/:id', serviceController.deleteService);
 
 module.exports = router;

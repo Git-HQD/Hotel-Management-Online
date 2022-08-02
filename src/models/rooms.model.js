@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const room = sequelize.define(
     "Room",
     {
-      price: DataTypes.DECIMAL,
+      price: DataTypes.DECIMAL(10,2),
       number_of_people: DataTypes.INTEGER,
     },
     {

@@ -9,15 +9,12 @@ const notemtyDate = () => {
     ];
 }
 
-const notemtyId = (roomID) =>{
-    const room = db.rooms.findOne({
-        where: { id : roomId}
-    });
-    return room('id').notEmpty();
-}
+// const notemtyId = (roomID) =>{
+//     return room('id').notEmpty();
+// }
 
 module.exports = {
     notemtyDate,
-    notemtyId
+    // notemtyId
 }
 
