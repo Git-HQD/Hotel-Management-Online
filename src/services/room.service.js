@@ -1,14 +1,14 @@
 const { Error } = require('sequelize');
 const db = require('../models/index.model');
 
-//Get all room follow id
-const getRoom = async() =>{
-    return room =  await db.Room.findAll();
+//Get all room
+const getRooms = async() =>{
+    return rooms =  await db.Room.findAll();
 };
 //Get room follow req Date form custommer
-const searchRoom = async ( roomId, startDate, endDate ) => {
+const searchRoom = async ( id) => {
     const room = await db.Room.findOne({
-        where: { id : roomId }
+        where: { id }
     });
     //Error if customer accept startdate or enddate
     if(!room) {
@@ -20,29 +20,31 @@ const searchRoom = async ( roomId, startDate, endDate ) => {
 //Create room
 const createRoom = async ( data ) =>{
     return await db.Room.create({ 
+        room_type_id: data.room_type_id,
         price: data.price,
         number_of_people: data.number_of_people 
     });
 };
 
 //update room
-const updateRoom = async( roomId, data ) =>{
-    const room = await searchRoom(roomId);
-    //error If done found room in system 
+const updateRoom = async( id, data ) =>{
+    const room = await searchRoom(id);
+    //error If done found room in system
+    room.room_type_id = data.room_type_id; 
     room.price = data.price;
-    room.number_of_people = data.number_of_people
-    await room.save(room);
+    room.number_of_people = data.number_of_people;
+    await room.save();
     return room;
 };
 
 //Delete room
-const deleteRoom = async( roomId,data )=>{
-    const room = await searchRoom( roomId );
-    await room.destroy( data );
+const deleteRoom = async( id )=>{
+    const room = await searchRoom( id );
+    await room.destroy();
 }
 
 module.exports = {
-    getRoom,
+    getRooms,
     searchRoom,
     createRoom,
     updateRoom,

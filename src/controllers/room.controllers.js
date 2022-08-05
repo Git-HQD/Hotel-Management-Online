@@ -1,18 +1,16 @@
-const roomsService = require('../services/rooms.service');
+const roomService = require('../services/room.service');
 
 //Get all room in Hotel
-const getRoom = async( req, res )=>{
-   const room = await roomsService.getRoom();
+const getRooms = async( req, res )=>{
+   const rooms = await roomService.getRooms();
 
-   res.status(200).json( room );
+   res.status(200).json( rooms );
 }
 
 // Find one room in Hotel
 const searchRoom = async ( req, res ) => {
-   const { id:  roomId } = req.params;
-   const startDate = req.body;
-   const endDate = req.body;
-   const room = await roomsService.searchRoom( roomId );
+   const id = req.params.id;
+   const room = await roomService.searchRoom( id );
    
    res.status(200).json( room );
 }
@@ -20,7 +18,7 @@ const searchRoom = async ( req, res ) => {
 //Create room
 const createRoom = async( req, res ) =>{
    const data = req.body;
-   const room = await roomsService.createRoom( data );
+   const room = await roomService.createRoom( data );
    
    res.status(201).json( room );
 }
@@ -29,7 +27,7 @@ const createRoom = async( req, res ) =>{
 const updateRoom = async( req, res ) =>{
    const id = req.params.id;
    const data = req.body;
-   const room = await roomsService.updateRoom( id, data );
+   const room = await roomService.updateRoom( id, data );
    
    res.status(200).json( room )
 }
@@ -37,17 +35,14 @@ const updateRoom = async( req, res ) =>{
 //Delete Room
 const deleteRoom = async( req, res )=>{
    const id = req.params.id;
-   const data = req.body;
-   const room = await roomsService.deleteRoom( id, data );
+   const room = await roomService.deleteRoom( id );
 
    res.status(200).json( room )
 }
 module.exports = {
-   getRoom,
+   getRooms,
    searchRoom,
    createRoom,
    updateRoom,
    deleteRoom
 };
-
-

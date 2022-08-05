@@ -1,11 +1,11 @@
-const serviceController = require('../../controllers/services.controller');
+const serviceController = require('../../controllers/service.controller');
 const express = require('express');
 
 const router = express.Router();
 
-router.get('/', serviceController.getService);
+router.get('/', serviceController.getServices);
 
-router.get('/:id', serviceController.searchService);
+router.get('/search', serviceController.searchService);
 
 router.post('/', serviceController.createService);
 

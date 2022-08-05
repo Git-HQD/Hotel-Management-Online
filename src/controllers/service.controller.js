@@ -1,16 +1,16 @@
-const serviceService = require('../services/services.service');
+const serviceService = require('../services/service.service');
 
-const getService = async(req, res) =>{
-    const service = await serviceService.getService();
+const getServices = async(req, res) =>{
+    const services = await serviceService.getServices();
 
-    res.status(200).json( service )
+    res.status(200).json( services )
 };
 
 const searchService = async(req, res) =>{
-    const { id: serviceId } = req.params;
-    const service = await serviceService.searchService( serviceId );
+    const name= req.body;
+    const services = await serviceService.searchService(name.name);
 
-    res.status(200).json( service)
+    res.status(200).json( services )
 };
 
 const createService = async(req, res) =>{
@@ -30,13 +30,13 @@ const updateService = async(req, res) =>{
 
 const deleteService = async(req, res) =>{
     const id = req.params.id;
-    const service = await serviceService.deleteService( id, data);
+    const service = await serviceService.deleteService( id );
 
     res.status(202).json( service )
 };
 
 module.exports = {
-    getService,
+    getServices,
     searchService,
     createService,
     updateService,
